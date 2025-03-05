@@ -1,0 +1,5 @@
+M1/Preprocessed Data/*.txt
+
+M1/Raw Data/*.txt
+
+M1/all_documents_tfidf.csv
