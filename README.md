@@ -20,6 +20,8 @@ For our project, we used data from the Da7ee7 YouTube channel. We acknowledge an
 
 ![Document Length Distribution](./images/document-length.png)
 
+As we can see there are some outliers in the document lengths. Removing them before the machine learning task would be a good decision. 
+
 ### Bigram Frequency Analysis
 
 While unigram (single-word) analysis gives us insights into the most frequent words, bigram analysis reveals common word pairs, which can:
@@ -29,6 +31,8 @@ Improve topic coherence, as certain concepts are better represented as pairs rat
 
 ![Bigram Frequency](./images/bigrams.png)
 
+Using these Bigrams as tokens would capture more meaning and contribute to a more efficient topic modeling pipeline.
+
 ### Word Frequency Analysis
 
 - Method: Count occurrences of words across documents.
@@ -36,6 +40,8 @@ Improve topic coherence, as certain concepts are better represented as pairs rat
 - Reasoning: Identifies most common words in the corpus. Helps determine if stopwords were effectively removed.
 
 ![Word Cloud](./images/cloud.png)
+
+From this word cloud we gain insights on which words we can remove as stopwords and so on.
 
 ### TF-IDF Analysis
 
@@ -99,3 +105,18 @@ Although topic modeling focuses on general themes, Named Entity Recognition (NER
 - Reasoning: Certain named entities may be highly relevant to topics.
 
 NER can help refine topic labels by identifying key figures, places, or institutions. Example Use Case: If an LDA model identifies a topic related to technology, NER can extract specific company names (e.g., "Apple", "Google"), making the topic labels more interpretable.
+
+
+### Limitations of Our Framework
+
+While our cleaning and preprocessing pipeline is well-optimized for topic modeling, there are certain limitations that should be acknowledged:
+
+1. Sensitivity to Preprocessing Choices
+Certain preprocessing steps, such as stemming, may lead to loss of meaning for some words, affecting topic coherence.
+Stopword removal may unintentionally filter out words that hold contextual importance.
+Decisions like punctuation removal might impact phrase-based topic modeling approaches (e.g., bi-grams, tri-grams).
+Potential Improvement: A more dynamic approach where preprocessing choices are evaluated against topic coherence scores.
+
+2. Loss of Context in Topic Modeling
+Bag-of-Words (BoW) and TF-IDF representations ignore word order, which may lead to loss of syntactic and semantic structure.
+
