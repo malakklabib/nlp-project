@@ -23,7 +23,7 @@ While unigram (single-word) analysis gives us insights into the most frequent wo
 Capture phrases that provide richer topic meaning (e.g., "climate change" instead of "climate" and "change" separately).
 Improve topic coherence, as certain concepts are better represented as pairs rather than single words.
 
-![Bigram Frequency](./bigrams.png)
+![Bigram Frequency](./images/bigrams.png)
 
 ### Word Frequency Analysis
 
@@ -31,7 +31,7 @@ Improve topic coherence, as certain concepts are better represented as pairs rat
 - Visualization: A word frequency histogram or a word cloud.
 - Reasoning: Identifies most common words in the corpus. Helps determine if stopwords were effectively removed.
 
-![Word Cloud](./cloud.png)
+![Word Cloud](./images/cloud.png)
 
 ### TF-IDF Analysis
 
