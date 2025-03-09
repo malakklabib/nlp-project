@@ -6,6 +6,10 @@ For this milestone we decided to tailor the cleaning and pre-processing pipeline
 
 We started off by carrying out various analysis tasks to gain insight on how the data was originally formatted, its content, certain relationships and much more. We then used this analysis to guide our cleaning and pre-processing stages. The rest of this report will be talking about each stage we carried out, the reasoning behind each step and why we decided to do it that specific way.
 
+## Data
+
+For our project, we used data from the Da7ee7 YouTube channel. We acknowledge and credit Malak Labib and Hamza Gehad. for curating and providing access to this dataset. https://drive.google.com/drive/u/0/folders/10SnpI_Z6sxbAT1b1NXvL8Q7iLzEnJ0oO 
+
 ## Analysis
 
 ### Document Length Distribution Analysis
