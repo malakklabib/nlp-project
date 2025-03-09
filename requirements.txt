@@ -1,0 +1,13 @@
+ipykernel
+nltk
+scikit-learn
+pandas
+transformers
+torch
+torchvision
+torchaudio
+tf-keras
+matplotlib
+arabic_reshaper
+python-bidi
+wordcloud
