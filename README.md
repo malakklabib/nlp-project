@@ -48,6 +48,14 @@ From this word cloud we gain insights on which words we can remove as stopwords 
 - Method: Compute TF-IDF scores to determine important words per document.
 - Reasoning: High TF-IDF scores indicate document-specific importance. Helps visualize which words differentiate topics rather than just appear frequently.
 
+### Sentiment Analysis
+
+- Model: Ammar-alhaj-ali/arabic-MARBERT-sentiment model from Hugging Face's Transformers library. 
+- Text Processing: Each document was processed in chunks of 150 words to handle long text effectively. Each chunk was classified into one of three categories: negative, neutral, or positive.
+- Results Aggregation: Sentiment classification was aggregated for each document by calculating the average probabilities of all chunks and assigning the sentiment with the highest count as the final sentiment label.
+
+![Sentiment Analysis](./images/sentiment_analysis.png)
+
 #### Category vs. Average Engagement
 
 - **Method:** We computed the average engagement (views, likes, and comments) per category.
@@ -170,3 +178,5 @@ While our cleaning and preprocessing pipeline is well-optimized for topic modeli
 
 2. Loss of Context in Topic Modeling
    Bag-of-Words (BoW) and TF-IDF representations ignore word order, which may lead to loss of syntactic and semantic structure.
+
+3. Most of the sentiment analysis results were classified as negative, which could indicate a limitation in the model's accuracy or bias in the dataset. The arabic-MARBERT model may not generalize well to specific contexts like this dataset's content. Further fine-tuning of the model might be necessary to improve accuracy.
