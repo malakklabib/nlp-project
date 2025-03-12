@@ -8,7 +8,7 @@ We started off by carrying out various analysis tasks to gain insight on how the
 
 ## Data
 
-For our project, we used data from the Da7ee7 YouTube channel. We acknowledge and credit Malak Labib and Hamza Gehad. for curating and providing access to this dataset. https://drive.google.com/drive/u/0/folders/10SnpI_Z6sxbAT1b1NXvL8Q7iLzEnJ0oO 
+For our project, we used data from the Da7ee7 YouTube channel. We acknowledge and credit Malak Labib and Hamza Gehad. for curating and providing access to this dataset. https://drive.google.com/drive/u/0/folders/10SnpI_Z6sxbAT1b1NXvL8Q7iLzEnJ0oO
 
 ## Analysis
 
@@ -20,7 +20,7 @@ For our project, we used data from the Da7ee7 YouTube channel. We acknowledge an
 
 ![Document Length Distribution](./images/document-length.png)
 
-As we can see there are some outliers in the document lengths. Removing them before the machine learning task would be a good decision. 
+As we can see there are some outliers in the document lengths. Removing them before the machine learning task would be a good decision.
 
 ### Bigram Frequency Analysis
 
@@ -47,6 +47,58 @@ From this word cloud we gain insights on which words we can remove as stopwords 
 
 - Method: Compute TF-IDF scores to determine important words per document.
 - Reasoning: High TF-IDF scores indicate document-specific importance. Helps visualize which words differentiate topics rather than just appear frequently.
+
+#### Category vs. Average Engagement
+
+- **Method:** We computed the average engagement (views, likes, and comments) per category.
+- **Visualization:** Horizontal bar plot showing engagement levels for each category.
+- **Reasoning:** Identifies which content categories drive the most audience interaction.
+
+![Category vs Average Engagement](./images/category-average.png)
+
+**Insight:**
+
+- History & Politics had the **highest average engagement**, while Health had the lowest.
+- Categories like **Science & Technology** and **Religion** also performed well, indicating public interest in these subjects.
+
+#### **Most Common Entities for a Label (Example: Politics)**
+
+- **Method:** Extracted the top entities appearing under the **Politics** label using NER.
+- **Visualization:** Horizontal bar chart displaying the **top 5 most frequently mentioned entities**.
+- **Reasoning:** Identifies the most commonly discussed names, places, or organizations within a category.
+
+![Top Entities in Politics](./images/entity-politics.png)
+
+**Insight:**
+
+- "روميل" (Rommel), "هتلر" (Hitler), and **major geopolitical regions** were dominant in political discussions.
+- This suggests that historical political figures and past events are highly referenced in this category.
+
+#### **Most Common Entities in Viral Content**
+
+- **Method:** Identified the most frequently appearing named entities in **viral content (1M+ views).**
+- **Visualization:** Bar chart ranking the top 10 most frequent entities.
+- **Reasoning:** Helps determine **which topics contribute to virality**.
+
+![Top Entities in Viral Content](./images/entity-viral.png)
+
+**Insight:**
+
+- "مصر" (Egypt), "الهند" (India), and "الصين" (China) were among the most frequent entities in viral content.
+- This suggests that **historical and geopolitical topics** play a strong role in engagement.
+
+#### **Entity Co-Occurrence Network Analysis**
+
+- **Method:** Created a network graph showing which entities frequently appear together in viral content.
+- **Visualization:** A network graph of entity co-occurrence relationships.
+- **Reasoning:** Helps identify potential thematic connections between entities.
+
+![Entity Co-Occurrence Network](./images/co-occurence.png)
+
+**Insight:**
+
+- The network did not reveal strong insights, as many entities appeared loosely connected rather than forming meaningful clusters.
+- **Negative results are still valuable**, as they indicate that entity relationships in viral content may be more context-dependent rather than rigidly structured.
 
 ## Cleaning
 
@@ -106,17 +158,15 @@ Although topic modeling focuses on general themes, Named Entity Recognition (NER
 
 NER can help refine topic labels by identifying key figures, places, or institutions. Example Use Case: If an LDA model identifies a topic related to technology, NER can extract specific company names (e.g., "Apple", "Google"), making the topic labels more interpretable.
 
-
 ### Limitations of Our Framework
 
 While our cleaning and preprocessing pipeline is well-optimized for topic modeling, there are certain limitations that should be acknowledged:
 
 1. Sensitivity to Preprocessing Choices
-Certain preprocessing steps, such as stemming, may lead to loss of meaning for some words, affecting topic coherence.
-Stopword removal may unintentionally filter out words that hold contextual importance.
-Decisions like punctuation removal might impact phrase-based topic modeling approaches (e.g., bi-grams, tri-grams).
-Potential Improvement: A more dynamic approach where preprocessing choices are evaluated against topic coherence scores.
+   Certain preprocessing steps, such as stemming, may lead to loss of meaning for some words, affecting topic coherence.
+   Stopword removal may unintentionally filter out words that hold contextual importance.
+   Decisions like punctuation removal might impact phrase-based topic modeling approaches (e.g., bi-grams, tri-grams).
+   Potential Improvement: A more dynamic approach where preprocessing choices are evaluated against topic coherence scores.
 
 2. Loss of Context in Topic Modeling
-Bag-of-Words (BoW) and TF-IDF representations ignore word order, which may lead to loss of syntactic and semantic structure.
-
+   Bag-of-Words (BoW) and TF-IDF representations ignore word order, which may lead to loss of syntactic and semantic structure.
