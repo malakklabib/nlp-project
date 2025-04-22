@@ -6,7 +6,7 @@ https://www.kaggle.com/code/mariammarioma/qa-attempt2/edit
 
 # Question Answering Model: LSTM-Based Encoder
 
-This repository implements a question-answering (QA) system using an LSTM-based encoder-decoder model. The model predicts the start and end indices of the answer span within a given context, leveraging bidirectional LSTMs and cross-entropy loss for optimization.
+This repository implements a question-answering (QA) system using an LSTM-based encoder model. The model predicts the start and end indices of the answer span within a given context, leveraging bidirectional LSTMs and cross-entropy loss for optimization.
 
 ---
 
