@@ -109,6 +109,8 @@ The model is evaluated using the following metrics:
    - **Start F1**: F1 score for start index prediction.
    - **End F1**: F1 score for end index prediction.
    - **Average F1**: Mean of Start F1 and End F1.
+  
+![Bigram Frequency](./evaluation-accuract.JPG)
 
 
 
