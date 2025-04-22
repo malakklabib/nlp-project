@@ -35,10 +35,14 @@ To prepare the data for model training, several preprocessing steps were applied
    - Corrected spelling errors using a spell-checker tool to improve input quality.
 
 5. **Word2Vec Embeddings**:
-   - Ensured all words were present in the Word2Vec vocabulary. 
-   - Words not found in Word2Vec were either spellchecked or left as is.
+   - Ensured all words were present in the Word2Vec vocabulary & replaced all tokens in context and questions with their embeddings . 
+   - Words not found in Word2Vec were assigned as tokens initially <UNK> token and then replaced with a random embedding.
 
-6. **Output Labels**:
+6. **Padding Context & Questions**:
+   - Added padding (zero vectors) to question embeddings shorter than maximum length defined (example: max_question_length was 33, therefore any question sample less than 33 in length was padded till it reached that length).
+    - Chosen max length was based on max length in training samples, so we didn't need to truncate in this specific case.
+
+7. **Output Labels**:
    - Added `answer_start` and `answer_end` as the word indices of the correct answer span in the context.
 
 ---
@@ -105,12 +109,12 @@ To prepare the data for model training, several preprocessing steps were applied
 
 The model is evaluated using the following metrics:
 1. **Average Loss**: Average loss over the test set.
-![Loss Curve](./loss-curve.JPG)
+   ![Loss Curve](./loss-curve.JPG)
 2. **F1 Score**:
    - **Start F1**: F1 score for start index prediction.
    - **End F1**: F1 score for end index prediction.
    - **Average F1**: Mean of Start F1 and End F1.
-  
+4. **Average F1 During Testing**: 5%
 ![Evaluation Score](./evaluation-score.JPG)
 
 
