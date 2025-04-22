@@ -139,15 +139,6 @@ On a held‑out test set, we compute:
 
 -   We record per‑epoch training loss in `epoch_losses`.
     
--   After training, we plot the loss curve to verify convergence:
-    
-  ```python
-    plt.plot(epoch_losses)
-    plt.xlabel('Epoch')
-    plt.ylabel('Loss')
-    plt.title('Training Loss Curve')
-    plt.show()`
-
 ---
 
 ## Model Evaluation
