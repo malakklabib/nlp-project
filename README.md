@@ -1,3 +1,116 @@
+# Milestone 2 Report
+
+## Methodology
+
+# Question Answering Model: LSTM-Based Encoder
+
+This repository implements a question-answering (QA) system using an LSTM-based encoder-decoder model. The model predicts the start and end indices of the answer span within a given context, leveraging bidirectional LSTMs and cross-entropy loss for optimization.
+
+---
+
+## System Architecture and Pipeline
+
+The system processes inputs such as questions and contexts, encodes them using bidirectional LSTMs, and outputs logits for start and end indices of the answer span. 
+
+---
+
+## Data Preprocessing Pipeline
+
+To prepare the data for model training, several preprocessing steps were applied to the questions, contexts, and answers:
+
+1. **Word-Based Answer Indexing**:
+   - Replaced character-based answer indices with **word-based indices**.
+   - Ignored punctuations, only counting words to compute `answer_start` and `answer_end`.
+
+2. **Tokenization**:
+   - Tokenized the input text into words.
+   - Removed punctuation and non-essential characters.
+
+3. **Lowercasing**:
+   - Converted all words to lowercase for uniformity.
+
+4. **Spell-Checking**:
+   - Corrected spelling errors using a spell-checker tool to improve input quality.
+
+5. **Word2Vec Embeddings**:
+   - Ensured all words were present in the Word2Vec vocabulary. 
+   - Words not found in Word2Vec were either spellchecked or left as is.
+
+6. **Output Labels**:
+   - Added `answer_start` and `answer_end` as the word indices of the correct answer span in the context.
+
+---
+
+## System Components
+
+### Key Components
+1. **Input Embedding**:
+   - **Embedding Dimension**: `300`
+   - **Number of Hidden Layers**: `1`
+   - Input sequences are padded and represented as tensors of word embeddings derived from Word2Vec.
+
+2. **Bidirectional LSTMs**:
+   - **Hidden Dimension**: `128 units`
+   - **Number of Layers**: `1`
+   - Separate LSTM layers are used for questions and contexts.
+   - The bidirectional setup captures forward and backward context for richer representations.
+
+3. **Fully Connected Output Layers**:
+   - `start_fc` predicts the start index logits.
+   - `end_fc` predicts the end index logits.
+   - Logits are masked with `context_mask` to ignore padding tokens.
+
+4. **Batch Size**:
+   - `64`
+
+---
+
+## Pipeline Overview
+
+### Inputs
+1. **Questions**: Padded tensor of question embeddings, shaped `(batch_size, question_max_len, embedding_dim)`.
+2. **Contexts**: Padded tensor of context embeddings, shaped `(batch_size, context_max_len, embedding_dim)`.
+3. **Answer Start and End Indices**: Ground truth word-based indices, shaped `(batch_size,)`.
+4. **Context Mask**: Binary mask to ignore padding tokens, shaped `(batch_size, context_max_len)`.
+
+### Outputs
+1. **Start Logits**: Predicted scores for the start index, shaped `(batch_size, context_max_len)`.
+2. **End Logits**: Predicted scores for the end index, shaped `(batch_size, context_max_len)`.
+
+---
+
+## Training and Optimization
+
+### Loss Function
+- **Cross-Entropy Loss** is used to compute the difference between predicted and true start/end indices.
+- Total loss: `start_loss + end_loss`.
+
+### Optimizer
+- **Adam Optimizer** with a learning rate of `0.001`.
+
+### Early Stopping
+- Stops training if no improvement in loss is observed for `6` consecutive epochs.
+
+### Data Loader and Batching
+- **Batch Size**: `64`
+- Data is loaded using PyTorch's `DataLoader`, ensuring efficient mini-batch processing during training.
+
+---
+
+## Model Evaluation
+
+### Evaluation Metrics
+
+The model is evaluated using the following metrics:
+1. **Average Loss**: Average loss over the test set.
+2. **F1 Score**:
+   - **Start F1**: F1 score for start index prediction.
+   - **End F1**: F1 score for end index prediction.
+   - **Average F1**: Mean of Start F1 and End F1.
+
+
+
+
 # Milestone 1 Report
 
 ## Our Goal
