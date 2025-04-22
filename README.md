@@ -103,15 +103,13 @@ To prepare the data for model training, several preprocessing steps were applied
 
 ### 3. Hyperparameters
 
--   **Batch size**: `batch_size` (e.g. 32)
+-   **Batch size**: 64
     
--   **Number of epochs**: `num_epochs` (e.g. 20)
+-   **Number of epochs**: 138
     
 -   **Early stopping**: Halt training if the validation loss does not improve for `patience` epochs (e.g. patience = 6).
     
 -   **Embedding dimension**: 300 (from Word2Vec)
-    
--   **Dropout**: Applied after the decoder (e.g. `Dropout(0.5)`)
     
 
 ### 4. Evaluation Metrics
