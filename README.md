@@ -105,12 +105,13 @@ To prepare the data for model training, several preprocessing steps were applied
 
 The model is evaluated using the following metrics:
 1. **Average Loss**: Average loss over the test set.
+![Loss Curve](./loss-curve.JPG)
 2. **F1 Score**:
    - **Start F1**: F1 score for start index prediction.
    - **End F1**: F1 score for end index prediction.
    - **Average F1**: Mean of Start F1 and End F1.
   
-![Bigram Frequency](./evaluation-score.JPG)
+![Evaluation Score](./evaluation-score.JPG)
 
 
 
