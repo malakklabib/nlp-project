@@ -109,7 +109,7 @@ To prepare the data for model training, several preprocessing steps were applied
     
 -   **Early stopping**: Halt training if the validation loss does not improve for `patience` epochs (e.g. patience = 6).
     
--   **Embedding dimension**: 300 (from GloVe/Word2Vec)
+-   **Embedding dimension**: 300 (from Word2Vec)
     
 -   **Dropout**: Applied after the decoder (e.g. `Dropout(0.5)`)
     
