@@ -155,6 +155,10 @@ The model is evaluated using the following metrics:
 4. **Average F1 During Testing**: 5%
 ![Evaluation Score](./evaluation-score.JPG)
 
+## Limitations
+
+Despite successfully building a functional QA system, the model has several limitations. Most notably, it lacks any attention mechanism or deeper interaction between the question and context, meaning it fails to align the two inputs effectively. The context and question are encoded separately, and their representations are not jointly reasoned over, which significantly limits the model's ability to understand which parts of the context are relevant to the question. Additionally, the fixed input lengths (60 for context and 33 for questions) may truncate useful information or the actual answer span, especially in longer contexts. The absence of pre-trained transformer-based architectures, while intentional to satisfy milestone constraints, also restricts the model’s capacity to generalize complex patterns from the data. Lastly, errors in tokenization, spell correction, or alignment of answer indices—especially after cleaning—can introduce noise, further affecting accuracy.
+
 
 
 
