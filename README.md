@@ -101,6 +101,53 @@ To prepare the data for model training, several preprocessing steps were applied
 - **Batch Size**: `64`
 - Data is loaded using PyTorch's `DataLoader`, ensuring efficient mini-batch processing during training.
 
+### 3. Hyperparameters
+
+-   **Batch size**: `batch_size` (e.g. 32)
+    
+-   **Number of epochs**: `num_epochs` (e.g. 20)
+    
+-   **Early stopping**: Halt training if the validation loss does not improve for `patience` epochs (e.g. patience = 6).
+    
+-   **Embedding dimension**: 300 (from GloVe/Word2Vec)
+    
+-   **Dropout**: Applied after the decoder (e.g. `Dropout(0.5)`)
+    
+
+### 4. Evaluation Metrics
+
+On a held‑out test set, we compute:
+
+-   **F1 Score**
+    
+    -   `start_f1`: F1 for predicted start indices
+        
+    -   `end_f1`: F1 for predicted end indices
+        
+    -   `avg_f1`: average of `start_f1` and `end_f1`
+        
+-   **Exact Match (EM)**
+    
+    -   Proportion of examples where both start _and_ end are predicted exactly correctly.
+        
+-   **Validation loss**
+    
+    -   Monitored each epoch to drive early stopping.
+        
+
+### 5. Monitoring & Visualization
+
+-   We record per‑epoch training loss in `epoch_losses`.
+    
+-   After training, we plot the loss curve to verify convergence:
+    
+  ```python
+    plt.plot(epoch_losses)
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Training Loss Curve')
+    plt.show()`
+
 ---
 
 ## Model Evaluation
