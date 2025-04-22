@@ -1,3 +1,5 @@
+https://www.kaggle.com/code/mariammarioma/qa-attempt2/edit
+
 # Milestone 2 Report
 
 ## Methodology
