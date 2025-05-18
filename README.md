@@ -1,3 +1,35 @@
+https://colab.research.google.com/drive/1EcovG88xY-kIxG-j-LYf-oyobd5ye0P9?usp=sharing
+# Milestone 3 Report
+## BERT Fine-Tuning on SQuADv2 for Question Answering + Chatbot
+This project demonstrates how to fine-tune a pre-trained BERT model on the SQuADv2 dataset for extractive question answering. It includes:
+
+-  Dataset preparation  
+-  Model fine-tuning  
+-  Evaluation (EM, F1, ROUGE-L)  
+-  A mini chatbot interface for QA
+
+## Experiment 1
+We started by full fine-tuning of the bert-base-uncased model on the SQuADv2. Challenges included:
+
+- Questions with answerable spans in the context
+- Unanswerable questions that require the model to determine when no answer is present.
+
+The task is extractive question answering, where the model is given a context and a question, and must return the span of text from the context that answers the question—or indicate that no answer exists.
+
+### Results on Test Set 
+
+Evaluation metrics on the SQuADv2 validation set (30% subset):
+
+| Metric          | Score  |
+| --------------- | ------ |
+| **Exact Match** | 66.25% |
+| **F1 Score**    | 69.57% |
+| **ROUGE-L**     | 0.3344 |
+| **HasAns F1**   | 74.93% |
+| **NoAns Exact** | 64.40% |
+
+
+
 https://www.kaggle.com/code/mariammarioma/qa-attempt2/edit
 
 # Milestone 2 Report
