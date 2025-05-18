@@ -58,23 +58,35 @@ In this experiment, we evaluated the pre-trained `bert-base-uncased` model direc
 | **NoAns Exact**   | 1.43%     |
 | **NoAns F1**      | 1.43%     |
 
-> ⚠️ These results show that the base model, without fine-tuning, performs very poorly on the SQuADv2 dataset. This is expected, as the model has not been adapted to the QA task or trained to handle unanswerable questions.
+> ### Limitations of Zero-Shot BERT (Without Fine-Tuning)
+
+These results show that the base model, without fine-tuning, performs very poorly on the SQuADv2 dataset. This is expected, as the model has not been adapted to the QA task or trained to handle unanswerable questions.
 
 ---
 
-### 🔍 Metric Raw Output (from `evaluate`)
+### Why Fine-Tuning Improves Performance (Our Insight)
 
-```json
-{
-  "exact": 0.814,
-  "f1": 3.705,
-  "rougeL": 0.027,
-  "HasAns_exact": 0.172,
-  "HasAns_f1": 6.058,
-  "NoAns_exact": 1.435,
-  "NoAns_f1": 1.435
-}
+The pre-trained `bert-base-uncased` model has been trained on general language modeling tasks like **masked language modeling** and **next sentence prediction**, which capture general syntactic and semantic knowledge. However, it lacks the **task-specific supervision** required for span-based question answering in our case, especially for challenging datasets like SQuADv2.
 
+Here are the core reasons fine-tuning is essential:
+
+1. **Lack of Knowledge:**
+   - BERT was not originally trained to predict **start and end token positions** that answer a specific question.
+   - Fine-tuning introduces supervision that teaches the model to **map a question to a specific span** in the context.
+
+2. **No Training for Unanswerability Detection:**
+   - SQuADv2 includes questions that are **explicitly unanswerable**.
+   - Only during fine-tuning does BERT learn to **predict "no answer"** confidently and differentiate between valid and invalid answer spans.
+
+3. **Task-Specific Vocabulary and Attention Patterns:**
+   - QA tasks require different attention patterns than general language modeling.
+   - Fine-tuning helps the model specialize its internal representations to **focus on question-context interactions** more effectively.
+
+4. **Fine-Tuning Adjusts All Parameters:**
+   - Unlike zero-shot settings, full fine-tuning allows **all 110M parameters** of BERT to update, optimizing the model for the QA objective.
+   - This makes it highly effective at capturing fine-grained dependencies between the question and context.
+
+---
 
 https://www.kaggle.com/code/mariammarioma/qa-attempt2/edit
 
