@@ -1,4 +1,3 @@
-https://colab.research.google.com/drive/1EcovG88xY-kIxG-j-LYf-oyobd5ye0P9?usp=sharing
 # Milestone 3 Report
 ## BERT on SQuADv2 for Question Answering + Chatbot
 This project demonstrates comparison between (no fine-tuning) and fully fine-tuning a pre-trained BERT model on the SQuADv2 dataset for extractive question answering. It includes:
@@ -7,7 +6,8 @@ This project demonstrates comparison between (no fine-tuning) and fully fine-tun
 -  Model fine-tuning  
 -  Evaluation (EM, F1, ROUGE-L)  
 -  A mini chatbot interface for QA
-
+-  
+https://colab.research.google.com/drive/1EcovG88xY-kIxG-j-LYf-oyobd5ye0P9?usp=sharing
 ## Experiment 1
 We started by full fine-tuning of the bert-base-uncased model on the SQuADv2. Challenges included:
 
@@ -30,6 +30,8 @@ Evaluation metrics on the SQuADv2 validation set (30% subset):
 
 ![Fulltuning Results](./full_tuning_bert.png)
 
+
+https://colab.research.google.com/drive/1Ia-L9IiwNfABWzyoAafXZPXIezMZ5t9r?usp=sharing
 ## Zero-Shot BERT Evaluation (No Fine-Tuning)
 
 In this experiment, we evaluated the pre-trained `bert-base-uncased` model directly on the SQuADv2 dataset **without fine-tuning**. The goal is to measure how well the base model performs in a real-world QA setting before any task-specific training.
