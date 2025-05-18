@@ -28,7 +28,7 @@ Evaluation metrics on the SQuADv2 validation set (30% subset):
 | **HasAns F1**   | 74.93% |
 | **NoAns Exact** | 64.40% |
 
-
+![Fulltuning Results](./full_tuning_bert.png)
 
 https://www.kaggle.com/code/mariammarioma/qa-attempt2/edit
 
