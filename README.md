@@ -1,7 +1,7 @@
 https://colab.research.google.com/drive/1EcovG88xY-kIxG-j-LYf-oyobd5ye0P9?usp=sharing
 # Milestone 3 Report
-## BERT Fine-Tuning on SQuADv2 for Question Answering + Chatbot
-This project demonstrates how to fine-tune a pre-trained BERT model on the SQuADv2 dataset for extractive question answering. It includes:
+## BERT on SQuADv2 for Question Answering + Chatbot
+This project demonstrates comparison between (no fine-tuning) and fully fine-tuning a pre-trained BERT model on the SQuADv2 dataset for extractive question answering. It includes:
 
 -  Dataset preparation  
 -  Model fine-tuning  
@@ -29,6 +29,52 @@ Evaluation metrics on the SQuADv2 validation set (30% subset):
 | **NoAns Exact** | 64.40% |
 
 ![Fulltuning Results](./full_tuning_bert.png)
+
+## Zero-Shot BERT Evaluation (No Fine-Tuning)
+
+In this experiment, we evaluated the pre-trained `bert-base-uncased` model directly on the SQuADv2 dataset **without fine-tuning**. The goal is to measure how well the base model performs in a real-world QA setting before any task-specific training.
+
+---
+
+### Setup
+
+- **Model:** `bert-base-uncased`
+- **Dataset:** SQuADv2 (30% subset of validation)
+- **Training:**  *No training performed*
+- **Evaluation Pipeline:** HuggingFace `pipeline("question-answering")`
+- **Device:** CPU or GPU (based on availability)
+
+---
+
+### Results on Test Set 
+
+| Metric            | Score     |
+|-------------------|-----------|
+| **Exact Match**   | 0.81%     |
+| **F1 Score**      | 3.71%     |
+| **ROUGE-L**       | 2.73%     |
+| **HasAns Exact**  | 0.17%     |
+| **HasAns F1**     | 6.06%     |
+| **NoAns Exact**   | 1.43%     |
+| **NoAns F1**      | 1.43%     |
+
+> ⚠️ These results show that the base model, without fine-tuning, performs very poorly on the SQuADv2 dataset. This is expected, as the model has not been adapted to the QA task or trained to handle unanswerable questions.
+
+---
+
+### 🔍 Metric Raw Output (from `evaluate`)
+
+```json
+{
+  "exact": 0.814,
+  "f1": 3.705,
+  "rougeL": 0.027,
+  "HasAns_exact": 0.172,
+  "HasAns_f1": 6.058,
+  "NoAns_exact": 1.435,
+  "NoAns_f1": 1.435
+}
+
 
 https://www.kaggle.com/code/mariammarioma/qa-attempt2/edit
 
