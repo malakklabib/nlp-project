@@ -8,7 +8,7 @@ This project demonstrates comparison between (no fine-tuning) and fully fine-tun
 -  A mini chatbot interface for QA
 -  
 https://colab.research.google.com/drive/1EcovG88xY-kIxG-j-LYf-oyobd5ye0P9?usp=sharing
-## Experiment 1
+## Experiment 1: BERT fine-tuning
 We started by full fine-tuning of the bert-base-uncased model on the SQuADv2. Challenges included:
 
 - Questions with answerable spans in the context
@@ -87,6 +87,44 @@ Here are the core reasons fine-tuning is essential:
 4. **Fine-Tuning Adjusts All Parameters:**
    - Unlike zero-shot settings, full fine-tuning allows **all 110M parameters** of BERT to update, optimizing the model for the QA objective.
    - This makes it highly effective at capturing fine-grained dependencies between the question and context.
+
+---
+
+# Experiment 2: Retrieval-Augmented Chatbot on SQuAD
+
+1. **Load & Prepare Data**  
+   - Fetch SQuAD via `datasets`  
+   - Sample/split into train/validation/test  
+   - Deduplicate (and optionally chunks) contexts
+
+2. **Build a FAISS Index**  
+   - Embed contexts with `sentence-transformers/all-MiniLM-L6-v2`  
+   - Wrap them in LangChain `Document`s  
+   - Create a semantic retriever (top-k configurable)
+
+3. **Configure FLAN-T5 QA Pipelines**  
+   - Load `google/flan-t5-large` as a `text2text-generation` pipeline  
+   - Define two prompts:  
+     - **ZERO_PROMPT** (direct answer)  
+     - **COT_PROMPT** (“First think step-by-step, then answer…”)
+
+4. **Instantiates RAG Chains**  
+   - `rag_zero` & `rag_cot` via `RetrievalQA.from_chain_type`
+
+5. **Evaluates on Test Set**  
+   - Runs both chains over held-out examples  
+   - Computes SQuAD F1, ROUGE-L F1, BLEU (with text normalization)  
+   - **Results**:  
+     - **CoT** → F1 65.49 %, ROUGE-L 59.61 %, BLEU 45.73 %  
+     - **Zero-shot** → F1 64.97 %, ROUGE-L 59.12 %, BLEU 48.82 %  
+   - **Why so close?**  
+     Both prompting strategies produce nearly identical token- and phrase-overlap on SQuAD with FLAN-T5-large—Chain-of-Thought gives only a marginal gain in F1/ROUGE, and zero-shot edges out on n-gram precision (BLEU).
+
+6. **Provides a Chatbot Interface**  
+   - `chat_cli(chain)`: simple REPL loop  
+   - `ConversationalRetrievalChain` + `ConversationBufferMemory`: optional memory (sliding window or summary)
+
+https://www.kaggle.com/code/malakamer/langchainlab
 
 ---
 
