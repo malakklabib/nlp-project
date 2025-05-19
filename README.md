@@ -90,7 +90,7 @@ Here are the core reasons fine-tuning is essential:
 
 ---
 
-# Experiment 2: Retrieval-Augmented Chatbot on SQuAD
+## Experiment 2: Retrieval-Augmented Chatbot on SQuAD
 
 1. **Load & Prepare Data**  
    - Fetch SQuAD via `datasets`  
@@ -118,7 +118,7 @@ Here are the core reasons fine-tuning is essential:
      - **CoT** → F1 65.49 %, ROUGE-L 59.61 %, BLEU 45.73 %  
      - **Zero-shot** → F1 64.97 %, ROUGE-L 59.12 %, BLEU 48.82 %  
    - **Why so close?**  
-     Both prompting strategies produce nearly identical token- and phrase-overlap on SQuAD with FLAN-T5-large—Chain-of-Thought gives only a marginal gain in F1/ROUGE, and zero-shot edges out on n-gram precision (BLEU).
+     Both prompting strategies produce nearly identical token- and phrase-overlap on SQuAD with FLAN-T5-large—Chain-of-Thought gives only a marginal gain in F1/ROUGE, and zero-shot edges out on n-gram precision (BLEU). With more carefully engineered CoT prompts (e.g. more examples, clearer step-by-step instructions, span-copy directives), we might unlock a larger performance gap in favor of Chain-of-Thought.
 
 6. **Provides a Chatbot Interface**  
    - `chat_cli(chain)`: simple REPL loop  
