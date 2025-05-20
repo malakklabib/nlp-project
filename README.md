@@ -1,3 +1,133 @@
+# Milestone 3 Report
+## BERT on SQuADv2 for Question Answering + Chatbot
+This project demonstrates comparison between (no fine-tuning) and fully fine-tuning a pre-trained BERT model on the SQuADv2 dataset for extractive question answering. It includes:
+
+-  Dataset preparation  
+-  Model fine-tuning  
+-  Evaluation (EM, F1, ROUGE-L)  
+-  A mini chatbot interface for QA
+-  
+https://colab.research.google.com/drive/1EcovG88xY-kIxG-j-LYf-oyobd5ye0P9?usp=sharing
+## Experiment 1: BERT fine-tuning
+We started by full fine-tuning of the bert-base-uncased model on the SQuADv2. Challenges included:
+
+- Questions with answerable spans in the context
+- Unanswerable questions that require the model to determine when no answer is present.
+
+The task is extractive question answering, where the model is given a context and a question, and must return the span of text from the context that answers the question—or indicate that no answer exists.
+
+### Results on Test Set 
+
+Evaluation metrics on the SQuADv2 validation set (30% subset):
+
+| Metric          | Score  |
+| --------------- | ------ |
+| **Exact Match** | 66.25% |
+| **F1 Score**    | 69.57% |
+| **ROUGE-L**     | 0.3344 |
+| **HasAns F1**   | 74.93% |
+| **NoAns Exact** | 64.40% |
+
+![Fulltuning Results](./full_tuning_bert.png)
+
+
+https://colab.research.google.com/drive/1Ia-L9IiwNfABWzyoAafXZPXIezMZ5t9r?usp=sharing
+## Zero-Shot BERT Evaluation (No Fine-Tuning)
+
+In this experiment, we evaluated the pre-trained `bert-base-uncased` model directly on the SQuADv2 dataset **without fine-tuning**. The goal is to measure how well the base model performs in a real-world QA setting before any task-specific training.
+
+---
+
+### Setup
+
+- **Model:** `bert-base-uncased`
+- **Dataset:** SQuADv2 (30% subset of validation)
+- **Training:**  *No training performed*
+- **Evaluation Pipeline:** HuggingFace `pipeline("question-answering")`
+- **Device:** CPU or GPU (based on availability)
+
+---
+
+### Results on Test Set 
+
+| Metric            | Score     |
+|-------------------|-----------|
+| **Exact Match**   | 0.81%     |
+| **F1 Score**      | 3.71%     |
+| **ROUGE-L**       | 2.73%     |
+| **HasAns Exact**  | 0.17%     |
+| **HasAns F1**     | 6.06%     |
+| **NoAns Exact**   | 1.43%     |
+| **NoAns F1**      | 1.43%     |
+
+> ### Limitations of Zero-Shot BERT (Without Fine-Tuning)
+
+These results show that the base model, without fine-tuning, performs very poorly on the SQuADv2 dataset. This is expected, as the model has not been adapted to the QA task or trained to handle unanswerable questions.
+
+---
+
+### Why Fine-Tuning Improves Performance (Our Insight)
+
+The pre-trained `bert-base-uncased` model has been trained on general language modeling tasks like **masked language modeling** and **next sentence prediction**, which capture general syntactic and semantic knowledge. However, it lacks the **task-specific supervision** required for span-based question answering in our case, especially for challenging datasets like SQuADv2.
+
+Here are the core reasons fine-tuning is essential:
+
+1. **Lack of Knowledge:**
+   - BERT was not originally trained to predict **start and end token positions** that answer a specific question.
+   - Fine-tuning introduces supervision that teaches the model to **map a question to a specific span** in the context.
+
+2. **No Training for Unanswerability Detection:**
+   - SQuADv2 includes questions that are **explicitly unanswerable**.
+   - Only during fine-tuning does BERT learn to **predict "no answer"** confidently and differentiate between valid and invalid answer spans.
+
+3. **Task-Specific Vocabulary and Attention Patterns:**
+   - QA tasks require different attention patterns than general language modeling.
+   - Fine-tuning helps the model specialize its internal representations to **focus on question-context interactions** more effectively.
+
+4. **Fine-Tuning Adjusts All Parameters:**
+   - Unlike zero-shot settings, full fine-tuning allows **all 110M parameters** of BERT to update, optimizing the model for the QA objective.
+   - This makes it highly effective at capturing fine-grained dependencies between the question and context.
+
+---
+
+## Experiment 2: Retrieval-Augmented Chatbot on SQuAD
+
+1. **Load & Prepare Data**  
+   - Fetch SQuAD via `datasets`  
+   - Sample/split into train/validation/test  
+   - Deduplicate (and optionally chunks) contexts
+
+2. **Build a FAISS Index**  
+   - Embed contexts with `sentence-transformers/all-MiniLM-L6-v2`  
+   - Wrap them in LangChain `Document`s  
+   - Create a semantic retriever (top-k configurable)
+
+3. **Configure FLAN-T5 QA Pipelines**  
+   - Load `google/flan-t5-large` as a `text2text-generation` pipeline  
+   - Define two prompts:  
+     - **ZERO_PROMPT** (direct answer)  
+     - **COT_PROMPT** (“First think step-by-step, then answer…”)
+
+4. **Instantiates RAG Chains**  
+   - `rag_zero` & `rag_cot` via `RetrievalQA.from_chain_type`
+
+5. **Evaluates on Test Set**  
+   - Runs both chains over held-out examples  
+   - Computes SQuAD F1, ROUGE-L F1, BLEU (with text normalization)  
+   - **Results**:  
+     - **CoT** → F1 65.49 %, ROUGE-L 59.61 %, BLEU 45.73 %  
+     - **Zero-shot** → F1 64.97 %, ROUGE-L 59.12 %, BLEU 48.82 %  
+   - **Why so close?**  
+     Both prompting strategies produce nearly identical token- and phrase-overlap on SQuAD with FLAN-T5-large—Chain-of-Thought gives only a marginal gain in F1/ROUGE, and zero-shot edges out on n-gram precision (BLEU). With more carefully engineered CoT prompts (e.g. more examples, clearer step-by-step instructions, span-copy directives), we might unlock a larger performance gap in favor of Chain-of-Thought.
+
+6. **Provides a Chatbot Interface**  
+   - `chat_cli(chain)`: simple REPL loop  
+   - `ConversationalRetrievalChain` + `ConversationBufferMemory`: optional memory (sliding window or summary)
+
+https://www.kaggle.com/code/malakamer/langchainlab
+
+---
+
 https://www.kaggle.com/code/mariammarioma/qa-attempt2/edit
 
 # Milestone 2 Report
